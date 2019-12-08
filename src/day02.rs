@@ -1,18 +1,11 @@
+use crate::intcode::IntCodeMachine;
+
 fn _day02_part1(input: &Vec<i64>) -> i64 {
-    let mut program = input.clone();
-    let mut idx = 0;
-    while program[idx] != 99 {
-        let output_idx = program[idx + 3] as usize;
-        let a = program[program[idx + 1] as usize];
-        let b = program[program[idx + 2] as usize];
-        match program[idx] {
-            1 => program[output_idx] = a + b,
-            2 => program[output_idx] = a * b,
-            _ => panic!()
-        }
-        idx += 4
-    }
-    program[0]
+    let mut virtual_machine = IntCodeMachine::new(input);
+
+    virtual_machine.run();
+
+    virtual_machine.code[0]
 }
 
 fn _day02_part2(input: &Vec<i64>, expected: i64) -> i64 {
