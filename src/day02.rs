@@ -5,7 +5,7 @@ fn _day02_part1(input: &Vec<i64>) -> i64 {
 
     virtual_machine.run();
 
-    virtual_machine.code[0]
+    virtual_machine.memory[&0]
 }
 
 fn _day02_part2(input: &Vec<i64>, expected: i64) -> i64 {
