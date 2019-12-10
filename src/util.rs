@@ -1,7 +1,7 @@
-use std::ops::{AddAssign, Add};
+use std::ops::{AddAssign, Add, Sub};
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
-pub struct Vector2(i64, i64);
+pub struct Vector2(pub i64, pub i64);
 
 impl Vector2 {
     pub const ZERO: Vector2 = Vector2(0, 0);
@@ -20,6 +20,17 @@ impl Add for Vector2 {
         Self {
             0: self.0 + other.0,
             1: self.1 + other.1,
+        }
+    }
+}
+
+impl Sub for Vector2 {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self {
+            0: self.0 - other.0,
+            1: self.1 - other.1,
         }
     }
 }
@@ -61,5 +72,51 @@ mod tests_util_vector2 {
         assert_eq!(Vector2(0, 1), v);
         v += Vector2(-2, -2);
         assert_eq!(Vector2(-2, -1), v);
+    }
+
+    #[test]
+    fn sub() {
+        assert_eq!(Vector2(-1, -1), Vector2(-1, -1) - Vector2(0, 0));
+        assert_eq!(Vector2(-1, -2), Vector2(-1, -1) - Vector2(0, 1));
+        assert_eq!(Vector2(-2, -1), Vector2(-1, 0) - Vector2(1, 1));
+        assert_eq!(Vector2(2, 3), Vector2(0, 1) - Vector2(-2, -2));
+    }
+}
+
+pub fn gcd(mut a: i64, mut b: i64) -> i64 {
+    if a == 0 {
+        return b.abs();
+    } else if b == 0 {
+        return a.abs();
+    }
+
+    a = a.abs();
+    b = b.abs();
+    while a != b {
+        if a > b {
+            a -= b;
+        } else {
+            b -= a;
+        }
+    }
+
+    a
+}
+
+#[cfg(test)]
+mod tests_util_gcd {
+    use crate::util::gcd;
+
+    #[test]
+    fn gcd_() {
+        assert_eq!(1071, gcd(1071, 0));
+        assert_eq!(462, gcd(0, 462));
+
+        assert_eq!(1071, gcd(-1071, 0));
+        assert_eq!(462, gcd(0, -462));
+
+        assert_eq!(21, gcd(1071, 462));
+        assert_eq!(1, gcd(1, 462));
+        assert_eq!(1, gcd(-1, 462));
     }
 }
