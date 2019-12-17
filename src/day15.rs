@@ -1,5 +1,4 @@
 use crate::intcode::IntCodeMachine;
-use crate::util::Vector2;
 
 fn _opposite_direction(direction: i64) -> i64 {
     match direction {
@@ -19,22 +18,6 @@ fn _backtrack(input: &Vec<i64>) -> Vec<i64> {
     }
 
     output
-}
-
-fn _position_for_input(input: &Vec<i64>) -> Vector2 {
-    let mut v = Vector2::new(0, 0);
-
-    for i in input {
-        match i {
-            1 => v.1 -= 1,
-            2 => v.1 += 1,
-            3 => v.0 -= 1,
-            4 => v.0 += 1,
-            _ => panic!(),
-        }
-    }
-
-    v
 }
 
 fn _move_to(machine_code: &mut IntCodeMachine, position: i64) -> i64 {
